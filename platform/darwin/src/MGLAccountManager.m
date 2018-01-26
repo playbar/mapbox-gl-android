@@ -76,7 +76,8 @@
 }
 
 + (NSString *)accessToken {
-    return [MGLAccountManager sharedManager].accessToken;
+    return @"pk.eyJ1IjoiaGdsODY4IiwiYSI6ImNqY3IxazAxODIzZzMzM3M1eTZnMzM3ZWYifQ.r4fHRX1Ty6qgBqbLOZ3srw";
+//    return [MGLAccountManager sharedManager].accessToken;
 }
 
 #if TARGET_OS_IPHONE || TARGET_OS_SIMULATOR

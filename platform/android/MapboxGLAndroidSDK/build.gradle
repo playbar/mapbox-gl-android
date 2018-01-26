@@ -89,7 +89,7 @@ android {
                     if (abi != 'all') {
                         abiFilters abi.split(' ')
                     } else {
-                        abiFilters "armeabi", "armeabi-v7a", "mips", "x86", "arm64-v8a", "x86_64"
+                        abiFilters "armeabi", "armeabi-v7a"
                     }
                 }
             }

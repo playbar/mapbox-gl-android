@@ -469,12 +469,12 @@ test-node-recycle-map: node
 
 #### Android targets ###########################################################
 
-MBGL_ANDROID_ABIS  = arm-v5;armeabi
-MBGL_ANDROID_ABIS += arm-v7;armeabi-v7a
-MBGL_ANDROID_ABIS += arm-v8;arm64-v8a
-MBGL_ANDROID_ABIS += x86;x86
-MBGL_ANDROID_ABIS += x86-64;x86_64
-MBGL_ANDROID_ABIS += mips;mips
+#MBGL_ANDROID_ABIS  = arm-v5;armeabi
+MBGL_ANDROID_ABIS = arm-v7;armeabi-v7a
+#MBGL_ANDROID_ABIS += arm-v8;arm64-v8a
+#MBGL_ANDROID_ABIS += x86;x86
+#MBGL_ANDROID_ABIS += x86-64;x86_64
+#MBGL_ANDROID_ABIS += mips;mips
 
 MBGL_ANDROID_LOCAL_WORK_DIR = /data/local/tmp/core-tests
 MBGL_ANDROID_LIBDIR = lib$(if $(filter arm-v8 x86-64,$1),64)
