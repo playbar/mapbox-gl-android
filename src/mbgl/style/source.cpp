@@ -20,7 +20,8 @@ SourceType Source::getType() const {
 }
 
 std::string Source::getID() const {
-    return baseImpl->id;
+    std::string str = baseImpl->id;
+    return str;
 }
 
 optional<std::string> Source::getAttribution() const {

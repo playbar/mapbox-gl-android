@@ -284,10 +284,13 @@ void GeometryTileWorker::redoLayout() {
         return;
     }
 
+//    const char *pfile = strrchr(__FILE__, '/') + 1;
     std::vector<std::string> symbolOrder;
     for (auto it = layers->rbegin(); it != layers->rend(); it++) {
         if ((*it)->type == LayerType::Symbol) {
-            symbolOrder.push_back((*it)->id);
+            std::string strid = (*it)->id;
+            printf("File:%s, Fun::%s, Line:%d, strid=%s\n", strrchr(__FILE__, '/') + 1, __FUNCTION__, __LINE__, strid.c_str());
+            symbolOrder.push_back(strid);
         }
     }
 

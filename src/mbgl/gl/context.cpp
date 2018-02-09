@@ -698,6 +698,7 @@ void Context::setColorMode(const ColorMode& color) {
 void Context::draw(PrimitiveType primitiveType,
                    std::size_t indexOffset,
                    std::size_t indexLength) {
+//    return;
     MBGL_CHECK_ERROR(glDrawElements(
         static_cast<GLenum>(primitiveType),
         static_cast<GLsizei>(indexLength),

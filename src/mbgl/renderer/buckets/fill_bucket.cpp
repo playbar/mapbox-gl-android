@@ -6,6 +6,7 @@
 #include <mbgl/util/math.hpp>
 
 #include <mapbox/earcut.hpp>
+#include <mbgl/util/leak_detector.h>
 
 #include <cassert>
 
@@ -38,9 +39,11 @@ FillBucket::FillBucket(const BucketParameters& parameters, const std::vector<con
     }
 }
 
-void FillBucket::addFeature(const GeometryTileFeature& feature,
-                            const GeometryCollection& geometry) {
-    for (auto& polygon : classifyRings(geometry)) {
+void FillBucket::addFeature(const GeometryTileFeature& feature, const GeometryCollection& geometry)
+{
+//    return;
+    for (auto& polygon : classifyRings(geometry))
+    {
         // Optimize polygons with many interior rings for earcut tesselation.
         limitHoles(polygon, 500);
 

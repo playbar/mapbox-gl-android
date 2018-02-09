@@ -269,9 +269,15 @@ void Parser::parseSources(const JSValue& value) {
         Log::Warning(Event::ParseStyle, "sources must be an object");
         return;
     }
-
+    
     for (const auto& property : value.GetObject()) {
         std::string id { property.name.GetString(), property.name.GetStringLength() };
+        
+        if( property.value.HasMember("url"))
+        {
+            printf("url=%s\n", property.value["url"].GetString());
+            printf("type=%s\n", property.value["type"].GetString());
+        }
 
 //        std::string val = property.value.GetString();
         conversion::Error error;
