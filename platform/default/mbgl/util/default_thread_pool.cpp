@@ -45,7 +45,8 @@ ThreadPool::~ThreadPool() {
     }
 }
 
-void ThreadPool::schedule(std::weak_ptr<Mailbox> mailbox) {
+void ThreadPool::schedule(std::weak_ptr<Mailbox> mailbox)
+{
     {
         std::lock_guard<std::mutex> lock(mutex);
         queue.push(mailbox);

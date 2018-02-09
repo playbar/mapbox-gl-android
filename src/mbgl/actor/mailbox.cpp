@@ -7,7 +7,8 @@
 namespace mbgl {
 
 Mailbox::Mailbox(Scheduler& scheduler_)
-    : scheduler(scheduler_) {
+    : scheduler(scheduler_)
+{
 }
 
 void Mailbox::close() {
