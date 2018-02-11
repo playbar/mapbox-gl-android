@@ -41,7 +41,8 @@ android {
     //
     // When building from Android Studio, gradle.properties sets `android.buildOnlyTargetAbi=true` so that
     // only the architecture for the device you're running on gets built.
-    def abi = 'all'
+    // def abi = 'all'
+    def abi = 'armeabi-v7a'
     if (!project.hasProperty('android.injected.invoked.from.ide') || project.hasProperty("mapbox.abis")) {
         // Errors when the user invokes Gradle from the command line and didn't set mapbox.abis
         abi = project.getProperty("mapbox.abis")
