@@ -1,0 +1,1 @@
+include ':mb-android-sdk', ':mb-android-sdk-testapp'

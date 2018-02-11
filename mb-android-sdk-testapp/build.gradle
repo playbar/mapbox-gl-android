@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-    implementation(project(':MapboxGLAndroidSDK'))
+    implementation(project(':mb-android-sdk'))
     implementation(dependenciesList.mapboxJavaServices) {
         transitive = true
     }
