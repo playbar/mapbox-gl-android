@@ -3,7 +3,7 @@
 namespace mbgl {
 namespace version {
 
-const char* revision = MBGL_VERSION_REV;
+const char* revision = "versoin";
 
 } // namespace version
 } // namespace mbgl

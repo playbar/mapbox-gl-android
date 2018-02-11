@@ -28,7 +28,7 @@ target_sources(mbgl-node
 )
 
 target_include_directories(mbgl-node
-    PRIVATE platform/default
+    PRIVATE default
 )
 
 # Use node-provided uv.h. This is not part of loop-uv.cmake because loop-uv.cmake is also

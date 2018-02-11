@@ -13,7 +13,7 @@ target_sources(mbgl-glfw
 )
 
 target_include_directories(mbgl-glfw
-    PRIVATE platform/default
+    PRIVATE default
 )
 
 target_link_libraries(mbgl-glfw

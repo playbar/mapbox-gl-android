@@ -32,8 +32,8 @@ target_add_mason_package(mbgl-filesource PRIVATE geojson)
 
 target_include_directories(mbgl-filesource
     PRIVATE include
-    PRIVATE src
-    PRIVATE platform/default
+    PRIVATE cpp
+    PRIVATE default
 )
 
 target_link_libraries(mbgl-filesource

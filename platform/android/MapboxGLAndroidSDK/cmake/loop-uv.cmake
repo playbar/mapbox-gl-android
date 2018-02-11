@@ -6,7 +6,7 @@ add_library(mbgl-loop-uv STATIC
 
 target_include_directories(mbgl-loop-uv
     PRIVATE include
-    PRIVATE src
+    PRIVATE cpp
 )
 
 target_link_libraries(mbgl-loop-uv

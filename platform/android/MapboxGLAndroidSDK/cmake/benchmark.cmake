@@ -3,7 +3,7 @@ add_executable(mbgl-benchmark
 )
 
 target_include_directories(mbgl-benchmark
-    PRIVATE src
+    PRIVATE cpp
     PRIVATE benchmark/include
     PRIVATE benchmark/src
     PRIVATE platform/default

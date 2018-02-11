@@ -11,10 +11,10 @@ endif()
 set_source_files_properties(test/src/mbgl/test/util.cpp PROPERTIES COMPILE_FLAGS -DNODE_EXECUTABLE="${NodeJS_EXECUTABLE}")
 
 target_include_directories(mbgl-test
-    PRIVATE src
+    PRIVATE cpp
     PRIVATE test/include
     PRIVATE test/src
-    PRIVATE platform/default
+    PRIVATE default
 )
 
 target_link_libraries(mbgl-test
