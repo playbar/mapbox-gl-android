@@ -49,6 +49,7 @@ android {
         javaMaxHeapSize "2g"
         preDexLibraries true
     }
+
 }
 
 dependencies {
