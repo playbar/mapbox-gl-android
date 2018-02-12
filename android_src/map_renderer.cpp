@@ -187,7 +187,9 @@ void MapRenderer::registerNative(jni::JNIEnv& env)
 
     // Register the peer
     jni::RegisterNativePeer<MapRenderer>(env, MapRenderer::javaClass, "nativePtr",
-                                         std::make_unique<MapRenderer, JNIEnv&, jni::Object<MapRenderer>, jni::Object<FileSource>,
+                                         std::make_unique<MapRenderer, JNIEnv&,
+                                                 jni::Object<MapRenderer>,
+                                                 jni::Object<FileSource>,
                                                  jni::jfloat, jni::String, jni::String>,
                                          "nativeInitialize", "finalize",
                                          METHOD(&MapRenderer::render, "nativeRender"),

@@ -15,6 +15,8 @@
 #include <string>
 #include <thread>
 #include <utility>
+#include <unistd.h>
+#include <mylog.h>
 
 namespace mbgl {
 namespace util {
@@ -43,14 +45,16 @@ public:
     Thread(const std::string& name, Args&&... args) {
         std::promise<void> running;
         
-        printf("File:%s, Fun:%s, Line:%d, name=%s \n", strrchr(__FILE__, '/')+1, __FUNCTION__, __LINE__, name.c_str());
+        LOGE("File:%s, Fun:%s, Line:%d, name=%s, tid=%d", strrchr(__FILE__, '/')+1, __FUNCTION__, __LINE__, name.c_str(), gettid());
 
         thread = std::thread([&] {
+
             platform::setCurrentThreadName(name);
             platform::makeThreadLowPriority();
 
             util::RunLoop loop_(util::RunLoop::Type::New);
             loop = &loop_;
+            LOGE("File:%s, Fun:%s, Line:%d, name=%s, tid=%d", strrchr(__FILE__, '/')+1, __FUNCTION__, __LINE__, name.c_str(), gettid());
 
             object = std::make_unique<Actor<Object>>(*this, std::forward<Args>(args)...);
             running.set_value();

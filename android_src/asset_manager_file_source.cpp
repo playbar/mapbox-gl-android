@@ -13,7 +13,9 @@ namespace mbgl {
 
 class AssetManagerFileSource::Impl {
 public:
-    Impl(ActorRef<Impl>, AAssetManager* assetManager_) : assetManager(assetManager_) {
+    Impl(ActorRef<Impl>, AAssetManager* assetManager_) : assetManager(assetManager_)
+    {
+
     }
 
     void request(const std::string& url, ActorRef<FileSourceRequest> req) {
@@ -40,8 +42,8 @@ private:
 
 AssetManagerFileSource::AssetManagerFileSource(jni::JNIEnv& env, jni::Object<android::AssetManager> assetManager_)
     : assetManager(assetManager_.NewGlobalRef(env)),
-      impl(std::make_unique<util::Thread<Impl>>("AssetManagerFileSource",
-          AAssetManager_fromJava(&env, jni::Unwrap(**assetManager)))) {
+      impl(std::make_unique<util::Thread<Impl>>("AssetManagerFileSource", AAssetManager_fromJava(&env, jni::Unwrap(**assetManager))))
+{
 }
 
 AssetManagerFileSource::~AssetManagerFileSource() = default;

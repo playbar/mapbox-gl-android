@@ -4,6 +4,8 @@
 #include <mbgl/actor/scheduler.hpp>
 #include <mbgl/storage/resource_transform.hpp>
 #include <mbgl/util/logging.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 #include "asset_manager_file_source.hpp"
 #include "jni/generic_global_ref_deleter.hpp"
@@ -16,7 +18,9 @@ namespace android {
 FileSource::FileSource(jni::JNIEnv& _env,
                        jni::String accessToken,
                        jni::String _cachePath,
-                       jni::Object<AssetManager> assetManager) {
+                       jni::Object<AssetManager> assetManager)
+{
+    LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
     // Create a core default file source
     fileSource = std::make_unique<mbgl::DefaultFileSource>(
         jni::Make<std::string>(_env, _cachePath) + "/mbgl-offline.db",

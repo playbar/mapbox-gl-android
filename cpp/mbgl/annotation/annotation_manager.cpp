@@ -187,8 +187,10 @@ void AnnotationManager::updateStyle() {
 
 void AnnotationManager::updateData() {
     std::lock_guard<std::mutex> lock(mutex);
-    if (dirty) {
-        for (auto& tile : tiles) {
+    if (dirty)
+    {
+        for (auto& tile : tiles)
+        {
             tile->setData(getTileData(tile->id.canonical));
         }
         dirty = false;

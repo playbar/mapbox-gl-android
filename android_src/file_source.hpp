@@ -19,7 +19,10 @@ namespace android {
 class FileSource {
 public:
 
-    static constexpr auto Name() { return "com/mapbox/mapboxsdk/storage/FileSource"; };
+    static constexpr auto Name()
+    {
+        return "com/mapbox/mapboxsdk/storage/FileSource";
+    };
 
     struct ResourceTransformCallback {
         static constexpr auto Name() { return "com/mapbox/mapboxsdk/storage/FileSource$ResourceTransformCallback"; }

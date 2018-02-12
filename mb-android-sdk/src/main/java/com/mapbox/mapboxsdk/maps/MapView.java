@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.util.LongSparseArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -141,6 +142,7 @@ public class MapView extends FrameLayout {
         } else {
           getViewTreeObserver().removeGlobalOnLayoutListener(this);
         }
+        Log.e("MapView", "onGlobalLayout threadid=" + android.os.Process.myTid());
         initialiseDrawingSurface(options);
       }
     });
