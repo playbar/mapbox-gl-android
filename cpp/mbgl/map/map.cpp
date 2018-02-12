@@ -105,7 +105,8 @@ Map::Map(RendererFrontend& rendererFrontend,
                                   scheduler,
                                   mapMode,
                                   constrainMode,
-                                  viewportMode)) {
+                                  viewportMode))
+{
     impl->transform.resize(size);
 }
 

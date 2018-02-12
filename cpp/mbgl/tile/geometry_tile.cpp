@@ -21,6 +21,7 @@
 #include <mbgl/actor/scheduler.hpp>
 
 #include <iostream>
+#include <mylog.h>
 
 namespace mbgl {
 
@@ -85,6 +86,8 @@ void GeometryTile::setData(std::unique_ptr<const GeometryTileData> data_) {
     // Mark the tile as pending again if it was complete before to prevent signaling a complete
     // state despite pending parse operations.
     pending = true;
+
+    LOGE("File:%s, this:%0x, tid=%d", strrchr(__FILE__, '/') +1, (unsigned int)this, gettid());
 
     ++correlationID;
     worker.invoke(&GeometryTileWorker::setData, std::move(data_), correlationID);

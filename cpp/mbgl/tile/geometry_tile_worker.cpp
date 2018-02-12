@@ -15,6 +15,7 @@
 #include <mbgl/util/exception.hpp>
 
 #include <unordered_set>
+#include <mylog.h>
 
 namespace mbgl {
 
@@ -35,7 +36,9 @@ GeometryTileWorker::GeometryTileWorker(ActorRef<GeometryTileWorker> self_,
       obsolete(obsolete_),
       mode(mode_),
       pixelRatio(pixelRatio_),
-      showCollisionBoxes(showCollisionBoxes_) {
+      showCollisionBoxes(showCollisionBoxes_)
+{
+    LOGE("File:%s, this:%0x", strrchr(__FILE__, '/') +1, (unsigned int)this);
 }
 
 GeometryTileWorker::~GeometryTileWorker() = default;
@@ -86,6 +89,7 @@ GeometryTileWorker::~GeometryTileWorker() = default;
 */
 
 void GeometryTileWorker::setData(std::unique_ptr<const GeometryTileData> data_, uint64_t correlationID_) {
+    LOGE("File:%s, this:%0x, tid=%d", strrchr(__FILE__, '/') +1, (unsigned int)this, gettid());
     try {
         data = std::move(data_);
         correlationID = correlationID_;

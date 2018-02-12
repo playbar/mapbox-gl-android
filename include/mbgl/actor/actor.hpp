@@ -9,7 +9,12 @@
 #include <future>
 #include <type_traits>
 
+#include <stdlib.h>
+#include <iostream>
+
 namespace mbgl {
+
+    class GeometryTileWorker;
 
 /*
     An `Actor<O>` is an owning reference to an asynchronous object of type `O`: an "actor".
@@ -53,7 +58,12 @@ public:
     template <typename U = Object, class... Args, typename std::enable_if<std::is_constructible<U, ActorRef<U>, Args...>::value>::type * = nullptr>
     Actor(Scheduler& scheduler, Args&&... args_)
             : mailbox(std::make_shared<Mailbox>(scheduler)),
-              object(self(), std::forward<Args>(args_)...) {
+              object(self(), std::forward<Args>(args_)...)
+    {
+        if(std::is_same<Object, GeometryTileWorker>::value)
+        {
+            std::cout<<"int type"<<std::endl;
+        }
     }
 
     // Enabled for plain Objects

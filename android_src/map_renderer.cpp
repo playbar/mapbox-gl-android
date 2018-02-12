@@ -178,7 +178,8 @@ void MapRenderer::onSurfaceChanged(JNIEnv&, jint width, jint height) {
 
 jni::Class<MapRenderer> MapRenderer::javaClass;
 
-void MapRenderer::registerNative(jni::JNIEnv& env) {
+void MapRenderer::registerNative(jni::JNIEnv& env)
+{
     // Lookup the class
     MapRenderer::javaClass = *jni::Class<MapRenderer>::Find(env).NewGlobalRef(env).release();
 
@@ -186,13 +187,12 @@ void MapRenderer::registerNative(jni::JNIEnv& env) {
 
     // Register the peer
     jni::RegisterNativePeer<MapRenderer>(env, MapRenderer::javaClass, "nativePtr",
-                                         std::make_unique<MapRenderer, JNIEnv&, jni::Object<MapRenderer>, jni::Object<FileSource>, jni::jfloat, jni::String, jni::String>,
+                                         std::make_unique<MapRenderer, JNIEnv&, jni::Object<MapRenderer>, jni::Object<FileSource>,
+                                                 jni::jfloat, jni::String, jni::String>,
                                          "nativeInitialize", "finalize",
                                          METHOD(&MapRenderer::render, "nativeRender"),
-                                         METHOD(&MapRenderer::onSurfaceCreated,
-                                                "nativeOnSurfaceCreated"),
-                                         METHOD(&MapRenderer::onSurfaceChanged,
-                                                "nativeOnSurfaceChanged"));
+                                         METHOD(&MapRenderer::onSurfaceCreated, "nativeOnSurfaceCreated"),
+                                         METHOD(&MapRenderer::onSurfaceChanged, "nativeOnSurfaceChanged"));
 }
 
 MapRenderer& MapRenderer::getNativePeer(JNIEnv& env, jni::Object<MapRenderer> jObject) {
