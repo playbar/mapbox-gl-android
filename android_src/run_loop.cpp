@@ -26,6 +26,7 @@ namespace {
 using namespace mbgl::util;
 
 int looperCallbackNew(int fd, int, void* data) {
+    LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
     int buffer[1];
     while (read(fd, buffer, sizeof(buffer)) > 0) {}
 

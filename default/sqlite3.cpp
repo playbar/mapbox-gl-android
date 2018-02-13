@@ -18,7 +18,7 @@ class DatabaseImpl {
 public:
     DatabaseImpl(const char* filename, int flags)
     {
-        LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+        LOGE("File:%s, Fun:%s, filename=%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, filename, gettid());
         const int error = sqlite3_open_v2(filename, &db, flags, nullptr);
         if (error != SQLITE_OK) {
             const auto message = sqlite3_errmsg(db);
