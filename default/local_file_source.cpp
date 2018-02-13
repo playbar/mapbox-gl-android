@@ -55,8 +55,9 @@ public:
 
 };
 
-LocalFileSource::LocalFileSource()
-    : impl(std::make_unique<util::Thread<Impl>>("LocalFileSource")) {
+LocalFileSource::LocalFileSource() : impl(std::make_unique<util::Thread<Impl>>("LocalFileSource"))
+{
+    LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
 }
 
 LocalFileSource::~LocalFileSource() = default;

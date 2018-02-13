@@ -56,6 +56,7 @@ public:
             loop = &loop_;
             LOGE("File:%s, Fun:%s, Line:%d, name=%s, tid=%d", strrchr(__FILE__, '/')+1, __FUNCTION__, __LINE__, name.c_str(), gettid());
 
+
             object = std::make_unique<Actor<Object>>(*this, std::forward<Args>(args)...);
             running.set_value();
 
@@ -139,7 +140,9 @@ private:
             queue.push(mailbox);
         }
 
-        loop->invoke([this] { receive(); });
+        loop->invoke([this] {
+                         receive();
+                     });
     }
 
     void receive() {

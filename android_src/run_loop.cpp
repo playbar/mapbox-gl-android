@@ -204,7 +204,9 @@ RunLoop* RunLoop::Get() {
     return static_cast<RunLoop*>(Scheduler::GetCurrent());
 }
 
-RunLoop::RunLoop(Type type) : impl(std::make_unique<Impl>(this, type)) {
+RunLoop::RunLoop(Type type) : impl(std::make_unique<Impl>(this, type))
+{
+    LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
     Scheduler::SetCurrent(this);
 }
 
