@@ -5,6 +5,8 @@
 #include <mbgl/util/string.hpp>
 #include <mbgl/util/chrono.hpp>
 #include <mbgl/util/logging.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 #include "sqlite3.hpp"
 
@@ -210,6 +212,7 @@ std::pair<bool, uint64_t> OfflineDatabase::putInternal(const Resource& resource,
 
 optional<std::pair<Response, uint64_t>> OfflineDatabase::getResource(const Resource& resource) {
     // clang-format off
+    LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
     Statement accessedStmt = getStatement(
         "UPDATE resources SET accessed = ?1 WHERE url = ?2");
     // clang-format on
@@ -246,6 +249,18 @@ optional<std::pair<Response, uint64_t>> OfflineDatabase::getResource(const Resou
     } else if (stmt->get<bool>(5)) {
         response.data = std::make_shared<std::string>(util::decompress(*data));
         size = data->length();
+        static int count = 1;
+        char fileName[256];
+        sprintf(fileName, "/sdcard/tmp/%s.txt", resource.url.c_str());
+        ++count;
+        FILE *pFile = fopen(fileName, "w");
+        if( pFile)
+        {
+            fwrite(response.data->c_str(), response.data->length(), 1, pFile);
+            fflush(pFile);
+            fclose(pFile);
+        }
+
     } else {
         response.data = std::make_shared<std::string>(*data);
         size = data->length();

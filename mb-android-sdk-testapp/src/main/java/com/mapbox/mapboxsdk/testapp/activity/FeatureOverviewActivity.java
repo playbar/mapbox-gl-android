@@ -1,5 +1,6 @@
 package com.mapbox.mapboxsdk.testapp.activity;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -16,7 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.mapbox.mapboxsdk.testapp.PermissionUtils;
 import com.mapbox.mapboxsdk.testapp.R;
 import com.mapbox.mapboxsdk.testapp.adapter.FeatureAdapter;
 import com.mapbox.mapboxsdk.testapp.adapter.FeatureSectionAdapter;
@@ -79,6 +82,15 @@ public class FeatureOverviewActivity extends AppCompatActivity implements Permis
     } else {
       features = savedInstanceState.getParcelableArrayList(KEY_STATE_FEATURES);
       onFeaturesLoaded(features);
+    }
+  }
+
+  protected void onResume()
+  {
+    super.onResume();
+    if(PermissionUtils.checkPermission(FeatureOverviewActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200))
+    {
+      Log.i("permission", "checkPermission is ok");
     }
   }
 

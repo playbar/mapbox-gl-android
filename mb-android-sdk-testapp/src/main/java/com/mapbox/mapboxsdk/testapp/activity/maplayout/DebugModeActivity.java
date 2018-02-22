@@ -1,12 +1,15 @@
 package com.mapbox.mapboxsdk.testapp.activity.maplayout;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +25,11 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.style.layers.Layer;
 import com.mapbox.mapboxsdk.style.layers.Property;
+import com.mapbox.mapboxsdk.testapp.PermissionUtils;
 import com.mapbox.mapboxsdk.testapp.R;
+import com.mapbox.mapboxsdk.testapp.activity.FeatureOverviewActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,9 +58,44 @@ public class DebugModeActivity extends AppCompatActivity implements OnMapReadyCa
     Style.TRAFFIC_NIGHT
   };
 
+  private boolean addPermission(List<String> permissionsList, String permission)
+  {
+    if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)
+    {
+      permissionsList.add(permission);
+
+      // Check for Rationale Option
+      if (!shouldShowRequestPermissionRationale(permission))
+        return false;
+    }
+
+    return true;
+  }
+
+  public void checkRuntimePermissionsRunnable()
+  {
+    if (android.os.Build.VERSION.SDK_INT >= 23)
+    {
+      // Android 6.0+ needs runtime permission checks
+      List<String> permissionsNeeded = new ArrayList<String>();
+      final List<String> permissionsList = new ArrayList<String>();
+
+      if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE))
+        permissionsNeeded.add("Read External Storage");
+      if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        permissionsNeeded.add("Write External Storage");
+
+      if (permissionsList.size() > 0)
+      {
+        requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 124);
+      }
+    }
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    checkRuntimePermissionsRunnable();
     HttpRequestUtil.setPrintRequestUrlOnFailure(true);
     setContentView(R.layout.activity_debug_mode);
     setupToolbar();
@@ -181,7 +222,13 @@ public class DebugModeActivity extends AppCompatActivity implements OnMapReadyCa
   @Override
   protected void onResume() {
     super.onResume();
-    mapView.onResume();
+//    if(PermissionUtils.checkPermission(DebugModeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.READ_EXTERNAL_STORAGE}, 200))
+    {
+      Log.i("permission", "checkPermission is ok");
+      mapView.onResume();
+    }
+
   }
 
   @Override
