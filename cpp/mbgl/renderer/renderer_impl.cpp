@@ -86,7 +86,7 @@ namespace mbgl {
 
     void Renderer::Impl::render(const UpdateParameters& updateParameters)
     {
-        LOGE("File:%s, Fun:%s, tid=%d, begin", strrchr(__FILE__, '/') + 1,  __FUNCTION__, gettid());
+        LOGE("Fun:%s, line:%d, tid=%d, begin",  __FUNCTION__, __LINE__, gettid());
         if (updateParameters.mode != MapMode::Continuous) {
             // Don't load/render anyting in still mode until explicitly requested.
             if (!updateParameters.stillImageRequest) {
@@ -267,7 +267,7 @@ namespace mbgl {
 
         bool loaded = updateParameters.styleLoaded && isLoaded();
         if (updateParameters.mode != MapMode::Continuous && !loaded) {
-            LOGE("File:%s, Fun:%s, tid=%d, end", strrchr(__FILE__, '/') + 1,  __FUNCTION__, gettid());
+            LOGE("Fun:%s, tid=%d, end",  __FUNCTION__, gettid());
             return;
         }
 
@@ -653,7 +653,7 @@ namespace mbgl {
 
         // Cleanup only after signaling completion
         parameters.context.performCleanup();
-        LOGE("File:%s, Fun:%s, tid=%d, end", strrchr(__FILE__, '/') + 1,  __FUNCTION__, gettid());
+        LOGE("Fun:%s, line:%d, tid=%d, end",  __FUNCTION__, __LINE__, gettid());
     }
 
     std::vector<Feature> Renderer::Impl::queryRenderedFeatures(const ScreenLineString& geometry, const RenderedQueryOptions& options) const {

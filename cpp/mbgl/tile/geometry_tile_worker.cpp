@@ -89,7 +89,7 @@ GeometryTileWorker::~GeometryTileWorker() = default;
 */
 
 void GeometryTileWorker::setData(std::unique_ptr<const GeometryTileData> data_, uint64_t correlationID_) {
-    LOGE("File:%s, this:%0x, tid=%d", strrchr(__FILE__, '/') +1, (unsigned int)this, gettid());
+    LOGE("Fun:%s, Line:%d, this:%0x, tid=%d", __FUNCTION__, __LINE__, (unsigned int)this, gettid());
     try {
         data = std::move(data_);
         correlationID = correlationID_;

@@ -212,7 +212,7 @@ std::pair<bool, uint64_t> OfflineDatabase::putInternal(const Resource& resource,
 
 optional<std::pair<Response, uint64_t>> OfflineDatabase::getResource(const Resource& resource) {
     // clang-format off
-    LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+    LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
     Statement accessedStmt = getStatement(
         "UPDATE resources SET accessed = ?1 WHERE url = ?2");
     // clang-format on

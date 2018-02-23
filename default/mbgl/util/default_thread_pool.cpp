@@ -8,7 +8,7 @@
 namespace mbgl {
 
 ThreadPool::ThreadPool(std::size_t count) {
-    LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+    LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
     threads.reserve(count);
     for (std::size_t i = 0; i < count; ++i) {
         threads.emplace_back([this, i]() {
@@ -28,7 +28,7 @@ ThreadPool::ThreadPool(std::size_t count) {
                 auto mailbox = queue.front();
                 queue.pop();
                 lock.unlock();
-                LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+                LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
                 Mailbox::maybeReceive(mailbox);
             }
         });

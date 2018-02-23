@@ -22,6 +22,7 @@
 #include <list>
 #include <unordered_set>
 #include <unordered_map>
+#include <mylog.h>
 
 namespace mbgl {
 
@@ -215,23 +216,28 @@ std::unique_ptr<AsyncRequest> OnlineFileSource::request(const Resource& resource
 
     case Resource::Kind::Style:
         res.url = mbgl::util::mapbox::normalizeStyleURL(apiBaseURL, resource.url, accessToken);
+        LOGE("File:%s, Fun:%s, Style-> url=%s", strrchr(__FILE__, '/') + 1, __FUNCTION__, res.url.c_str());
         break;
 
     case Resource::Kind::Source:
         res.url = util::mapbox::normalizeSourceURL(apiBaseURL, resource.url, accessToken);
+        LOGE("File:%s, Fun:%s, Source-> url=%s", strrchr(__FILE__, '/') + 1, __FUNCTION__, res.url.c_str());
         break;
 
     case Resource::Kind::Glyphs:
         res.url = util::mapbox::normalizeGlyphsURL(apiBaseURL, resource.url, accessToken);
+        LOGE("File:%s, Fun:%s, Glyphs-> url=%s", strrchr(__FILE__, '/') + 1, __FUNCTION__, res.url.c_str());
         break;
 
     case Resource::Kind::SpriteImage:
     case Resource::Kind::SpriteJSON:
         res.url = util::mapbox::normalizeSpriteURL(apiBaseURL, resource.url, accessToken);
+        LOGE("File:%s, Fun:%s, SpriteJSON-> url=%s", strrchr(__FILE__, '/') + 1, __FUNCTION__, res.url.c_str());
         break;
 
     case Resource::Kind::Tile:
         res.url = util::mapbox::normalizeTileURL(apiBaseURL, resource.url, accessToken);
+        LOGE("File:%s, Fun:%s, Tile-> url=%s", strrchr(__FILE__, '/') + 1, __FUNCTION__, res.url.c_str());
         break;
     }
 

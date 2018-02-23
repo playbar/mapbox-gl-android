@@ -39,7 +39,7 @@ public abstract class LibraryLoader {
    */
   public static void load() {
     try {
-      Log.e("libraryloader", "threadid=" + android.os.Process.myTid());
+      Log.e("libraryloader", "java threadid=" + android.os.Process.myTid());
       loader.load("mapbox-gl");
     } catch (UnsatisfiedLinkError error) {
       Timber.e(error, "Failed to load native shared library.");

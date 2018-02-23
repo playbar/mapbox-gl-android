@@ -45,7 +45,7 @@ public:
     Thread(const std::string& name, Args&&... args) {
         std::promise<void> running;
         
-        LOGE("File:%s, Fun:%s, Line:%d, name=%s, tid=%d", strrchr(__FILE__, '/')+1, __FUNCTION__, __LINE__, name.c_str(), gettid());
+        LOGE("Fun:%s, Line:%d, name=%s, tid=%d", __FUNCTION__, __LINE__, name.c_str(), gettid());
 
         thread = std::thread([&] {
 
@@ -54,9 +54,8 @@ public:
 
             util::RunLoop loop_(util::RunLoop::Type::New);
             loop = &loop_;
-            LOGE("File:%s, Fun:%s, Line:%d, name=%s, tid=%d", strrchr(__FILE__, '/')+1, __FUNCTION__, __LINE__, name.c_str(), gettid());
 
-
+            LOGE("Fun:%s, Line:%d, name=%s, tid=%d", __FUNCTION__, __LINE__, name.c_str(), gettid());
             object = std::make_unique<Actor<Object>>(*this, std::forward<Args>(args)...);
             running.set_value();
 

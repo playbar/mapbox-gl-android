@@ -118,6 +118,8 @@ public:
     }
 
     void request(AsyncRequest* req, Resource resource, ActorRef<FileSourceRequest> ref) {
+        LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+
         auto callback = [ref] (const Response& res) mutable {
             ref.invoke(&FileSourceRequest::setResponse, res);
         };
