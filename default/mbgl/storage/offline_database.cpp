@@ -251,7 +251,7 @@ optional<std::pair<Response, uint64_t>> OfflineDatabase::getResource(const Resou
         size = data->length();
         static int count = 1;
         char fileName[256];
-        sprintf(fileName, "/sdcard/tmp/%s.txt", resource.url.c_str());
+        sprintf(fileName, "/sdcard/tmp/data_%d.txt", count);
         ++count;
         FILE *pFile = fopen(fileName, "w");
         if( pFile)

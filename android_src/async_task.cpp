@@ -50,7 +50,8 @@ private:
 };
 
 AsyncTask::AsyncTask(std::function<void()>&& fn)
-    : impl(std::make_unique<Impl>(std::move(fn))) {
+    : impl(std::make_unique<Impl>(std::move(fn)))
+{
 }
 
 AsyncTask::~AsyncTask() = default;

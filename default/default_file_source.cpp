@@ -131,6 +131,8 @@ public:
         } else {
             // Try the offline database
             if (resource.hasLoadingMethod(Resource::LoadingMethod::Cache)) {
+
+                LOGE("File:%s, Fun:%s, get offline data, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
                 auto offlineResponse = offlineDatabase->get(resource);
 
                 if (resource.loadingMethod == Resource::LoadingMethod::CacheOnly) {
@@ -164,8 +166,10 @@ public:
             }
 
             // Get from the online file source
-            if (resource.hasLoadingMethod(Resource::LoadingMethod::Network)) {
-                tasks[req] = onlineFileSource.request(resource, [=] (Response onlineResponse) mutable {
+            if (resource.hasLoadingMethod(Resource::LoadingMethod::Network))
+            {
+                tasks[req] = onlineFileSource.request(resource, [=] (Response onlineResponse)mutable
+                {
                     this->offlineDatabase->put(resource, onlineResponse);
                     callback(onlineResponse);
                 });

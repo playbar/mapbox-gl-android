@@ -9,6 +9,8 @@
 #include <mbgl/util/http_header.hpp>
 
 #include <jni/jni.hpp>
+#include <mylog.h>
+#include <unistd.h>
 #include "attach_env.hpp"
 
 namespace mbgl {
@@ -42,6 +44,7 @@ private:
 
     util::AsyncTask async { [this] {
         // Calling `callback` may result in deleting `this`. Copy data to temporaries first.
+        LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
         auto callback_ = callback;
         auto response_ = response;
         callback_(response_);
@@ -70,26 +73,31 @@ void RegisterNativeHTTPRequest(jni::JNIEnv& env) {
 
 HTTPRequest::HTTPRequest(jni::JNIEnv& env, const Resource& resource_, FileSource::Callback callback_)
     : resource(resource_),
-      callback(callback_) {
+      callback(callback_)
+{
+    LOGE("File:%s, Fun:%s begin, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
     std::string etagStr;
     std::string modifiedStr;
 
     if (resource.priorEtag) {
         etagStr = *resource.priorEtag;
-    } else if (resource.priorModified) {
+    }
+    else if (resource.priorModified)
+    {
         modifiedStr = util::rfc1123(*resource.priorModified);
     }
 
     jni::UniqueLocalFrame frame = jni::PushLocalFrame(env, 10);
 
-    static auto constructor =
-        javaClass.GetConstructor<jni::jlong, jni::String, jni::String, jni::String>(env);
+    static auto constructor = javaClass.GetConstructor<jni::jlong, jni::String, jni::String, jni::String>(env);
 
     javaRequest = javaClass.New(env, constructor,
         reinterpret_cast<jlong>(this),
         jni::Make<jni::String>(env, resource.url),
         jni::Make<jni::String>(env, etagStr),
         jni::Make<jni::String>(env, modifiedStr)).NewGlobalRef(env);
+    LOGE("File:%s, Fun:%s end, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+    return;
 }
 
 HTTPRequest::~HTTPRequest() {
