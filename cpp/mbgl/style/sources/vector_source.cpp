@@ -6,6 +6,8 @@
 #include <mbgl/storage/file_source.hpp>
 #include <mbgl/util/mapbox.hpp>
 #include <mbgl/util/constants.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 namespace style {
@@ -46,6 +48,7 @@ void VectorSource::loadDescription(FileSource& fileSource) {
 
     const std::string& url = urlOrTileset.get<std::string>();
     req = fileSource.request(Resource::source(url), [this, url](Response res) {
+        LOGE("Fun:%s, Line:%d, url=%s, tid=%d", __FUNCTION__, __LINE__, url.c_str(), gettid());
         if (res.error) {
             observer->onSourceError(*this, std::make_exception_ptr(std::runtime_error(res.error->message)));
         } else if (res.notModified) {

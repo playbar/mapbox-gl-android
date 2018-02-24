@@ -4,8 +4,9 @@
 #include <mbgl/storage/file_source.hpp>
 #include <mbgl/renderer/tile_parameters.hpp>
 #include <mbgl/util/tileset.hpp>
-
+#include <unistd.h>
 #include <cassert>
+#include <mylog.h>
 
 namespace mbgl {
 
@@ -94,6 +95,7 @@ void TileLoader<T>::makeOptional() {
 
 template <typename T>
 void TileLoader<T>::loadedData(const Response& res) {
+    LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
     if (res.error && res.error->reason != Response::Error::Reason::NotFound) {
         tile.setError(std::make_exception_ptr(std::runtime_error(res.error->message)));
     } else if (res.notModified) {

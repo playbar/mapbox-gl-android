@@ -293,7 +293,7 @@ void GeometryTileWorker::redoLayout() {
     for (auto it = layers->rbegin(); it != layers->rend(); it++) {
         if ((*it)->type == LayerType::Symbol) {
             std::string strid = (*it)->id;
-            printf("File:%s, Fun::%s, Line:%d, strid=%s\n", strrchr(__FILE__, '/') + 1, __FUNCTION__, __LINE__, strid.c_str());
+            LOGE("Fun::%s, Line:%d, layerid=%s, tid=%d", __FUNCTION__, __LINE__, strid.c_str(), gettid());
             symbolOrder.push_back(strid);
         }
     }

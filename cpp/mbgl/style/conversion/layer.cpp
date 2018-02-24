@@ -9,6 +9,8 @@
 #include <mbgl/style/layers/line_layer.hpp>
 #include <mbgl/style/layers/raster_layer.hpp>
 #include <mbgl/style/layers/symbol_layer.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 namespace style {
@@ -132,6 +134,7 @@ optional<std::unique_ptr<Layer>> Converter<std::unique_ptr<Layer>>::operator()(c
 
     optional<std::unique_ptr<Layer>> converted;
 
+    LOGE("Fun:%s, Line:%d, id=%s, type=%s, tid=%d", __FUNCTION__, __LINE__, id->c_str(), type->c_str(), gettid());
     if (*type == "fill") {
         converted = convertVectorLayer<FillLayer>(*id, value, error);
     } else if (*type == "fill-extrusion") {

@@ -19,6 +19,8 @@
 #include <mbgl/storage/file_source.hpp>
 #include <mbgl/storage/resource.hpp>
 #include <mbgl/storage/response.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 namespace style {
@@ -57,6 +59,8 @@ void Style::Impl::loadURL(const std::string& url_) {
     s2 = std::move(s1);
 
     styleRequest = fileSource.request(Resource::style(url), [this](Response res) {
+
+        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         // Once we get a fresh style, or the style is mutated, stop revalidating.
         if (res.isFresh() || mutated) {
             styleRequest.reset();
@@ -81,6 +85,9 @@ void Style::Impl::loadURL(const std::string& url_) {
 }
 
 void Style::Impl::parse(const std::string& json_) {
+
+    LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
+
     Parser parser;
 
     if (auto error = parser.parse(json_)) {

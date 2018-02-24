@@ -34,12 +34,12 @@ public:
             , localFileSource(std::make_unique<LocalFileSource>())
     {
         // Initialize the Database asynchronously so as to not block Actor creation.
-        LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         self.invoke(&Impl::initializeOfflineDatabase, cachePath, maximumCacheSize);
     }
 
     void initializeOfflineDatabase(std::string cachePath, uint64_t maximumCacheSize) {
-        LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         offlineDatabase = std::make_unique<OfflineDatabase>(cachePath, maximumCacheSize);
     }
 
@@ -118,7 +118,7 @@ public:
     }
 
     void request(AsyncRequest* req, Resource resource, ActorRef<FileSourceRequest> ref) {
-        LOGE("File:%s, Fun:%s, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
 
         auto callback = [ref] (const Response& res) mutable {
             ref.invoke(&FileSourceRequest::setResponse, res);
@@ -134,7 +134,7 @@ public:
             // Try the offline database
             if (resource.hasLoadingMethod(Resource::LoadingMethod::Cache)) {
 
-                LOGE("File:%s, Fun:%s, get offline data, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+                LOGE("Fun:%s, Line:%d, get offline data, tid=%d",  __FUNCTION__, __LINE__, gettid());
                 auto offlineResponse = offlineDatabase->get(resource);
 
                 if (resource.loadingMethod == Resource::LoadingMethod::CacheOnly) {

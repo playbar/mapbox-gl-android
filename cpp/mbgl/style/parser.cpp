@@ -17,14 +17,41 @@
 #include <rapidjson/document.h>
 //#include <rapidjson/filestream.h>
 #include <rapidjson/error/en.h>
+#include "rapidjson/reader.h"
+#include "rapidjson/prettywriter.h"
+#include "rapidjson/filereadstream.h"
+#include "rapidjson/filewritestream.h"
 
 #include <algorithm>
 #include <set>
 #include <sstream>
 
+using namespace rapidjson;
+
 namespace mbgl {
 namespace style {
-    
+
+
+void testRapidJson()
+{
+    // Prepare reader and input stream.
+    Reader reader;
+    char readBuffer[65536];
+    FileReadStream is(stdin, readBuffer, sizeof(readBuffer));
+
+    // Prepare writer and output stream.
+    char writeBuffer[65536];
+    FileWriteStream os(stdout, writeBuffer, sizeof(writeBuffer));
+    PrettyWriter<FileWriteStream> writer(os);
+
+    // JSON reader parse from the input stream and let writer generate the output.
+    if (!reader.Parse<kParseValidateEncodingFlag>(is, writer)) {
+        fprintf(stderr, "\nError(%u): %s\n", static_cast<unsigned>(reader.GetErrorOffset()), GetParseError_En(reader.GetParseErrorCode()));
+        return;
+    }
+
+    return;
+}
     
 void testParserJson()
 {
@@ -138,11 +165,14 @@ void testParserJson()
     
 }
 
+
+
 Parser::~Parser() = default;
 
-StyleParseResult Parser::parse(const std::string& json) {
-    
-    testParserJson();
+StyleParseResult Parser::parse(const std::string& json)
+{
+
+//    testParserJson();
     
     rapidjson::GenericDocument<rapidjson::UTF8<>, rapidjson::CrtAllocator> document;
     document.Parse<0>(json.c_str());

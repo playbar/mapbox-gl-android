@@ -2,6 +2,8 @@
 
 #include <mbgl/actor/mailbox.hpp>
 #include <mbgl/actor/scheduler.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 
@@ -23,6 +25,7 @@ void FileSourceRequest::onCancel(std::function<void()>&& callback) {
 }
 
 void FileSourceRequest::setResponse(const Response& response) {
+    LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
     // Copy, because calling the callback will sometimes self
     // destroy this object. We cannot move because this method
     // can be called more than one.
