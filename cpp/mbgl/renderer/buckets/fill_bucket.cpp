@@ -9,6 +9,8 @@
 #include <mbgl/util/leak_detector.h>
 
 #include <cassert>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mapbox {
 namespace util {
@@ -42,6 +44,7 @@ FillBucket::FillBucket(const BucketParameters& parameters, const std::vector<con
 void FillBucket::addFeature(const GeometryTileFeature& feature, const GeometryCollection& geometry)
 {
 //    return;
+    LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
     for (auto& polygon : classifyRings(geometry))
     {
         // Optimize polygons with many interior rings for earcut tesselation.

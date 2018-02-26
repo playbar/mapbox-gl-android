@@ -14,6 +14,8 @@
 #include <mbgl/actor/scheduler.hpp>
 
 #include <cassert>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 
@@ -64,7 +66,9 @@ void SpriteLoader::load(const std::string& url, Scheduler& scheduler, FileSource
         }
     });
 
-    loader->spriteRequest = fileSource.request(Resource::spriteImage(url, pixelRatio), [this](Response res) {
+    loader->spriteRequest = fileSource.request(Resource::spriteImage(url, pixelRatio), [this](Response res)
+    {
+        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         if (res.error) {
             observer->onSpriteError(std::make_exception_ptr(std::runtime_error(res.error->message)));
         } else if (res.notModified) {

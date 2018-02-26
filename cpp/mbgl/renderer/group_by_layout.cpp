@@ -8,6 +8,8 @@
 #include <rapidjson/stringbuffer.h>
 
 #include <unordered_map>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 
@@ -32,15 +34,21 @@ std::string layoutKey(const RenderLayer& layer) {
 }
 
 std::vector<std::vector<const RenderLayer*>> groupByLayout(const std::vector<std::unique_ptr<RenderLayer>>& layers) {
+    LOGE("begin-------------------");
     std::unordered_map<std::string, std::vector<const RenderLayer*>> map;
     for (auto& layer : layers) {
+        std::string strFirst = layoutKey(*layer);
+        LOGE("Fun:%s, Line:%d, key=%s, tid=%d", __FUNCTION__, __LINE__, strFirst.c_str(), gettid());
         map[layoutKey(*layer)].push_back(layer.get());
     }
 
+    LOGE("-------------------");
     std::vector<std::vector<const RenderLayer*>> result;
     for (auto& pair : map) {
+        LOGE("Fun:%s, Line:%d, key=%s, tid=%d", __FUNCTION__, __LINE__, pair.first.c_str(), gettid());
         result.push_back(pair.second);
     }
+    LOGE("end-------------------");
 
     return result;
 }
