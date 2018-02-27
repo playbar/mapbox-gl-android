@@ -1,6 +1,8 @@
 #include <mbgl/style/layer.hpp>
 #include <mbgl/style/layer_impl.hpp>
 #include <mbgl/style/layer_observer.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 namespace style {
@@ -19,6 +21,7 @@ LayerType Layer::getType() const {
 }
 
 std::string Layer::getID() const {
+    LOGE("Fun:%s, Line:%d, id=%s, tid=%d", __FUNCTION__, __LINE__, baseImpl->id.c_str(), gettid());
     return baseImpl->id;
 }
 

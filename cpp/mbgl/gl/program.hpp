@@ -16,6 +16,8 @@
 #include <mbgl/shaders/shaders.hpp>
 
 #include <string>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 namespace gl {
@@ -119,6 +121,8 @@ public:
               const IndexBuffer<DrawMode>& indexBuffer,
               std::size_t indexOffset,
               std::size_t indexLength) {
+
+        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         static_assert(std::is_same<Primitive, typename DrawMode::Primitive>::value, "incompatible draw mode");
 
         context.setDrawMode(drawMode);

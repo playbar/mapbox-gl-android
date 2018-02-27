@@ -73,20 +73,14 @@ public:
     Debugging(const Fn& loadExtension)
         :
 #ifndef NDEBUG
-          pushDebugGroup(
-              loadExtension({ { "GL_KHR_debug", "glPushDebugGroup" } })),
-          popDebugGroup(
-              loadExtension({ { "GL_KHR_debug", "glPopDebugGroup" } })),
-          pushGroupMarkerEXT(
-              loadExtension({ { "GL_EXT_debug_marker", "glPushGroupMarkerEXT" } })),
-          popGroupMarkerEXT(
-              loadExtension({ { "GL_EXT_debug_marker", "glPopGroupMarkerEXT" } })),
+          pushDebugGroup(loadExtension({ { "GL_KHR_debug", "glPushDebugGroup" } })),
+          popDebugGroup(loadExtension({ { "GL_KHR_debug", "glPopDebugGroup" } })),
+          pushGroupMarkerEXT(loadExtension({ { "GL_EXT_debug_marker", "glPushGroupMarkerEXT" } })),
+          popGroupMarkerEXT(loadExtension({ { "GL_EXT_debug_marker", "glPopGroupMarkerEXT" } })),
 #endif
-          debugMessageControl(
-              loadExtension({ { "GL_KHR_debug", "glDebugMessageControl" },
+          debugMessageControl(loadExtension({ { "GL_KHR_debug", "glDebugMessageControl" },
                               { "GL_ARB_debug_output", "glDebugMessageControlARB" } })),
-          debugMessageCallback(
-              loadExtension({ { "GL_KHR_debug", "glDebugMessageCallback" },
+          debugMessageCallback(loadExtension({ { "GL_KHR_debug", "glDebugMessageCallback" },
                               { "GL_ARB_debug_output", "glDebugMessageCallbackARB" } })) {
     }
 

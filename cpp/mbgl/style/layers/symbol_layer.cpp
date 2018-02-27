@@ -3,12 +3,17 @@
 #include <mbgl/style/layers/symbol_layer.hpp>
 #include <mbgl/style/layers/symbol_layer_impl.hpp>
 #include <mbgl/style/layer_observer.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 namespace style {
 
 SymbolLayer::SymbolLayer(const std::string& layerID, const std::string& sourceID)
-    : Layer(makeMutable<Impl>(LayerType::Symbol, layerID, sourceID)) {
+    : Layer(makeMutable<Impl>(LayerType::Symbol, layerID, sourceID))
+{
+    LOGE("Fun:%s, Line:%d, layerID=%s, sourceID=%s, tid=%d", __FUNCTION__, __LINE__,
+         layerID.c_str(), sourceID.c_str(), gettid());
 }
 
 SymbolLayer::SymbolLayer(Immutable<Impl> impl_)
