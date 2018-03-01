@@ -69,7 +69,9 @@ void GlyphManager::requestRange(GlyphRequest& request, const FontStack& fontStac
         return;
     }
 
-    request.req = fileSource.request(Resource::glyphs(glyphURL, fontStack, range), [this, fontStack, range](Response res) {
+    request.req = fileSource.request(Resource::glyphs(glyphURL, fontStack, range),
+                                     [this, fontStack, range](Response res)
+    {
         processResponse(res, fontStack, range);
     });
 }

@@ -135,6 +135,7 @@ public:
     // in `dst`. If the specified bounds exceed the bounds of the source or destination,
     // throw `std::out_of_range`. Must not be used to move data within a single Image.
     static void copy(const Image& srcImg, Image& dstImg, const Point<uint32_t>& srcPt, const Point<uint32_t>& dstPt, const Size& size) {
+        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         if (size.isEmpty()) {
             return;
         }
@@ -172,6 +173,7 @@ public:
             std::copy(srcData + srcOffset,
                       srcData + srcOffset + size.width * channels,
                       dstData + dstOffset);
+//            *((uint8_t *)(dstData + dstOffset)) = 0;
         }
     }
 

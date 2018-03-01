@@ -34,6 +34,7 @@ namespace mbgl {
 namespace android {
 
 PremultipliedImage LocalGlyphRasterizer::drawGlyphBitmap(const std::string& fontFamily, const bool bold, const GlyphID glyphID) {
+    LOGE("Fun:%s, Line:%d, fontFamily=%s, tid=%d", __FUNCTION__, __LINE__, fontFamily.c_str(), gettid());
     UniqueEnv env { AttachEnv() };
 
     using Signature = jni::Object<Bitmap>(jni::String, jni::jboolean, jni::jchar);

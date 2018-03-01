@@ -5,6 +5,7 @@
 namespace mbgl {
 
 std::vector<Glyph> parseGlyphPBF(const GlyphRange& glyphRange, const std::string& data) {
+    LOGE("Fun:%s, File:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
     std::vector<Glyph> result;
     result.reserve(256);
 
