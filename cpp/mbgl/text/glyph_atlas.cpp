@@ -7,6 +7,7 @@ namespace mbgl {
 static constexpr uint32_t padding = 1;
 
 GlyphAtlas makeGlyphAtlas(const GlyphMap& glyphs) {
+    LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
     GlyphAtlas result;
 
     mapbox::ShelfPack::ShelfPackOptions options;

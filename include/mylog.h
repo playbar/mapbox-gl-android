@@ -5,7 +5,9 @@
 #ifndef HELLO_JNI_MY_LOG_H
 #define HELLO_JNI_MY_LOG_H
 
+#include <unistd.h>
 #include <android/log.h>
+#include <time.h>
 
 #define MY_LOG_LEVEL_VERBOSE    1
 #define MY_LOG_LEVEL_DEBUG      2
@@ -89,5 +91,48 @@
 #else
 #define MY_LOG_ASSERT(...) MY_LOG_NOOP
 #endif
+
+inline uint64_t GetTimeNano()
+{
+    struct timespec t;
+    clock_gettime(CLOCK_MONOTONIC, &t);
+    uint64_t result = t.tv_sec * 1000000000LL + t.tv_nsec;
+    return result;
+}
+
+
+inline void ShowFPS()
+{
+#define INTERVALTIME 1000
+    static unsigned int frameCounter = 0;
+    static unsigned int prevTimeMs = 0;
+    static unsigned int lastTimeMS = 0;
+    static float maxFPS = 0;
+    static float minFPS = 0;
+
+    unsigned int currentTimeMs = GetTimeNano() * 1e-6;
+    float everyFPS =  1000.0f / (float)(currentTimeMs - lastTimeMS);
+    if( everyFPS > maxFPS ){
+        maxFPS = everyFPS;
+    }
+    if( everyFPS < minFPS )
+    {
+        minFPS = everyFPS;
+    }
+    lastTimeMS = currentTimeMs;
+    frameCounter++;
+    if (currentTimeMs - prevTimeMs > INTERVALTIME)
+    {
+        float elapsedSec = (float)(currentTimeMs - prevTimeMs) / 1000.0f;
+        float currentFPS = (float)frameCounter / elapsedSec;
+        LOGI("submit, FPS: %0.2f, maxFPS: %0.2f, minFPS: %0.2f",  currentFPS, maxFPS, minFPS);
+
+        minFPS = currentFPS;
+        maxFPS = currentFPS;
+        frameCounter = 0;
+        prevTimeMs = currentTimeMs;
+    }
+}
+
 
 #endif //HELLO_JNI_MY_LOG_H
