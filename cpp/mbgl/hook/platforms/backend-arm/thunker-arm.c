@@ -14,6 +14,7 @@
  *    limitations under the License.
  */
 
+#include <mbgl/hook/kitzz/include/kitzz.h>
 #include "thunker-arm.h"
 
 // 前提: arm 可以直接访问 pc 寄存器, 也就是说无需中间寄存器就可以实现 `abs

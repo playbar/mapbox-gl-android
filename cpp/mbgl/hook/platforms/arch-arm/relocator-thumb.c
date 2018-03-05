@@ -4,6 +4,8 @@
 #include "relocator-thumb.h"
 
 #define MAX_RELOCATOR_INSTRUCIONS_SIZE 64
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 
 void zz_thumb_relocator_init(ZzThumbRelocator *relocator, zz_ptr_t input_code, ZzThumbAssemblerWriter *output) {
 

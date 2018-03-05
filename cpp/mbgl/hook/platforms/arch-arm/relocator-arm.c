@@ -83,7 +83,7 @@ void zz_arm_relocator_try_relocate(zz_ptr_t address, zz_size_t min_bytes, zz_siz
         }
         tmp_size += insn_ctx.size;
         target_addr = target_addr + insn_ctx.size;
-    } while (tmp_size < min_bytes);
+    } while ((zz_size_t)tmp_size < min_bytes);
 
     if (early_end) {
         *max_bytes = tmp_size;

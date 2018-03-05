@@ -39,7 +39,7 @@ LinePatternPos LineAtlas::getDashPosition(const std::vector<float>& dasharray,
 LinePatternPos LineAtlas::addDash(const std::vector<float>& dasharray, LinePatternCap patternCap) {
     const uint8_t n = patternCap == LinePatternCap::Round ? 7 : 0;
     const uint8_t dashheight = 2 * n + 1;
-    const uint8_t offset = 128;
+//    const uint8_t offset = 128;
 
     if (nextRow + dashheight > image.size.height) {
         Log::Warning(Event::OpenGL, "line atlas bitmap overflow");
@@ -55,7 +55,8 @@ LinePatternPos LineAtlas::addDash(const std::vector<float>& dasharray, LinePatte
     float halfWidth = stretch * 0.5;
     // If dasharray has an odd length, both the first and last parts
     // are dashes and should be joined seamlessly.
-    bool oddLength = dasharray.size() % 2 == 1;
+    int size = dasharray.size();
+    bool oddLength = size % 2 == 1;
 
     for (int y = -n; y <= n; y++) {
         int row = nextRow + n + y;
@@ -102,7 +103,8 @@ LinePatternPos LineAtlas::addDash(const std::vector<float>& dasharray, LinePatte
             }
 
             LOGE("Fun:%s, Line:%d, image copy data, tid=%d", __FUNCTION__, __LINE__, gettid());
-            image.data[index + x] = fmax(0, fmin(255, signedDistance + offset));
+//            image.data[index + x] = fmax(0, fmin(255, signedDistance + 128));
+            image.data[index + x] = 00;
         }
     }
 

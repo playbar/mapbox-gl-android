@@ -111,6 +111,7 @@ void MapRenderer::scheduleSnapshot(std::unique_ptr<SnapshotCallback> callback) {
 void MapRenderer::render(JNIEnv&) {
     assert (renderer);
 
+    LOGI("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
     std::shared_ptr<UpdateParameters> params;
     {
         // Lock on the parameters
@@ -140,6 +141,7 @@ void MapRenderer::render(JNIEnv&) {
         snapshotCallback->operator()(backend->readFramebuffer());
         snapshotCallback.reset();
     }
+    ShowFPS();
 }
 
 void MapRenderer::onSurfaceCreated(JNIEnv&) {
@@ -149,8 +151,10 @@ void MapRenderer::onSurfaceCreated(JNIEnv&) {
     // The android system will have already destroyed the underlying
     // GL resources if this is not the first initialization and an
     // attempt to clean them up will fail
-    if (backend) backend->markContextLost();
-    if (renderer) renderer->markContextLost();
+    if (backend)
+        backend->markContextLost();
+    if (renderer)
+        renderer->markContextLost();
 
     // Reset in opposite order
     renderer.reset();

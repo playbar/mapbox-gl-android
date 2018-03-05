@@ -7,6 +7,8 @@
 #define ZZ_ARM_TINY_REDIRECT_SIZE 4
 #define ZZ_ARM_FULL_REDIRECT_SIZE 8
 
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 ZzInterceptorBackend *ZzBuildInteceptorBackend(ZzAllocator *allocator) {
     if (!ZzMemoryIsSupportAllocateRXPage()) {
         return NULL;

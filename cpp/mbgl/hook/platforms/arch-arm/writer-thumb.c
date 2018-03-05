@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 ZzThumbAssemblerWriter *zz_thumb_writer_new(zz_ptr_t data_ptr) {
     ZzThumbAssemblerWriter *writer = (ZzThumbAssemblerWriter *)zz_malloc_with_zero(sizeof(ZzThumbAssemblerWriter));
 

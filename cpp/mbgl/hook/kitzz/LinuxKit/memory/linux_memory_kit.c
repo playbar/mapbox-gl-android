@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 
 MemoryLayout *zz_linux_vm_get_memory_layout_via_pid(pid_t pid) {
     char filename[64];

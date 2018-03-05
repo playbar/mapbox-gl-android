@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <mbgl/hook/kitzz/include/kitzz.h>
 
 #include "stack.h"
 
@@ -76,7 +77,7 @@ zz_ptr_t ZzGetCallStackData(CallStack *callstack_ptr, char *key) {
     ZzCallStack *callstack = (ZzCallStack *)callstack_ptr;
     if (!callstack)
         return NULL;
-    int i;
+    zz_size_t i;
     for (i = 0; i < callstack->size; ++i) {
         if (!strcmp(callstack->items[i].key, key)) {
             return callstack->items[i].value;

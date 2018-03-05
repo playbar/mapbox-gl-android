@@ -2,6 +2,8 @@
 #include <mbgl/gl/gl.hpp>
 #include <mbgl/gl/context.hpp>
 #include <mbgl/gl/vertex_array_extension.hpp>
+#include <mylog.h>
+#include <unistd.h>
 
 namespace mbgl {
 namespace gl {
@@ -306,7 +308,15 @@ BindRenderbuffer::Type BindRenderbuffer::Get() {
 const constexpr BindTexture::Type BindTexture::Default;
 
 void BindTexture::Set(const Type& value) {
-    MBGL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, value));
+    LOGE("Fun:%s, Line:%d, textureid=%d, tid=%d", __FUNCTION__, __LINE__, value, gettid());
+    if( value == 23 )
+    {
+        MBGL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, 0));
+    }
+    else {
+        MBGL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, value));
+    }
+//    MBGL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
 BindTexture::Type BindTexture::Get() {

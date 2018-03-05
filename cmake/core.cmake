@@ -6,6 +6,10 @@ target_include_directories(mbgl-core
     PUBLIC include
     PUBLIC default
     PRIVATE cpp
+    PRIVATE cpp/mbgl/hook
+    PRIVATE cpp/mbgl/hook/kitzz/include
+    PRIVATE cpp/mbgl/hook/kitzz
+
 )
 
 target_add_mason_package(mbgl-core PUBLIC geometry)

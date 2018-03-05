@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <mbgl/hook/kitzz/include/kitzz.h>
 
 #define DEFAULT_ALLOCATOR_CAPACITY 4
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 
 ZzAllocator *ZzNewAllocator() {
     if (!ZzMemoryIsSupportAllocateRXPage())
@@ -22,7 +24,7 @@ ZzAllocator *ZzNewAllocator() {
 ZzMemoryPage *ZzNewMemoryPage() {
     zz_size_t page_size = ZzMemoryGetPageSzie();
     zz_ptr_t page_ptr   = NULL;
-    zz_ptr_t cave_ptr   = NULL;
+//    zz_ptr_t cave_ptr   = NULL;
     ZzMemoryPage *page  = NULL;
 
     page_ptr = ZzMemoryAllocatePages(1);
@@ -46,7 +48,7 @@ ZzMemoryPage *ZzNewMemoryPage() {
 ZzMemoryPage *ZzNewNearMemoryPage(zz_addr_t address, zz_size_t redirect_range_size) {
     zz_size_t page_size = ZzMemoryGetPageSzie();
     zz_ptr_t page_ptr   = NULL;
-    zz_ptr_t cave_ptr   = NULL;
+//    zz_ptr_t cave_ptr   = NULL;
     ZzMemoryPage *page  = NULL;
 
     page_ptr = ZzMemoryAllocateNearPages(address, redirect_range_size, 1);
@@ -82,7 +84,7 @@ ZzMemoryPage *ZzNewNearMemoryPage(zz_addr_t address, zz_size_t redirect_range_si
 }
 
 ZzMemoryPage *ZzNewNearCodeCave(zz_addr_t address, zz_size_t redirect_range_size, zz_size_t code_slice_size) {
-    zz_size_t page_size = ZzMemoryGetPageSzie();
+//    zz_size_t page_size = ZzMemoryGetPageSzie();
     zz_ptr_t cave_ptr   = NULL;
     ZzMemoryPage *page  = NULL;
     zz_size_t cave_size = code_slice_size;

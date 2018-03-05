@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <mbgl/hook/kitzz/include/kitzz.h>
 
 #include "interceptor.h"
 #include "trampoline.h"
@@ -47,7 +48,7 @@ ZzHookFunctionEntry *ZzFindHookFunctionEntry(zz_ptr_t target_ptr) {
 
     ZzHookFunctionEntrySet *hook_function_entry_set = &(interceptor->hook_function_entry_set);
 
-    int i;
+    zz_size_t i;
     for (i = 0; i < hook_function_entry_set->size; ++i) {
         if ((hook_function_entry_set->entries)[i] && target_ptr == (hook_function_entry_set->entries)[i]->target_ptr) {
             return (hook_function_entry_set->entries)[i];
@@ -108,7 +109,7 @@ void ZzFreeHookFunctionEntry(ZzHookFunctionEntry *entry) {
     ZzInterceptor *interceptor                      = g_interceptor;
     ZzHookFunctionEntrySet *hook_function_entry_set = &(interceptor->hook_function_entry_set);
     ZzHookFunctionEntry **entries                   = hook_function_entry_set->entries;
-    int i;
+    zz_size_t i;
     for (i = 0; i < hook_function_entry_set->size; ++i) {
         if (entries[i] && entry == entries[i]) {
             // exchange with the last item
@@ -185,7 +186,7 @@ ZZSTATUS ZzBuildHookGOT(zz_ptr_t target_ptr, zz_ptr_t replace_call_ptr, zz_ptr_t
     ZzInterceptor *interceptor                      = g_interceptor;
     ZzHookFunctionEntrySet *hook_function_entry_set = NULL;
     ZzHookFunctionEntry *entry;
-    int hook_type;
+//    int hook_type;
 
     /* check g_intercepter initialization */
     if (!interceptor) {

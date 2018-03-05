@@ -96,7 +96,9 @@ HTTPRequest::HTTPRequest(jni::JNIEnv& env, const Resource& resource_, FileSource
         jni::Make<jni::String>(env, resource.url),
         jni::Make<jni::String>(env, etagStr),
         jni::Make<jni::String>(env, modifiedStr)).NewGlobalRef(env);
-    LOGE("File:%s, Fun:%s end, tid=%d", strrchr(__FILE__, '/') + 1, __FUNCTION__, gettid());
+    LOGE("url=%s", resource.url.c_str());
+    LOGE("Fun:%s end, tid=%d", __FUNCTION__, gettid());
+
     return;
 }
 

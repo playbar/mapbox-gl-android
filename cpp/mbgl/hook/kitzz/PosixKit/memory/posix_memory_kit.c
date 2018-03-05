@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "PosixKit/memory/posix_memory_kit.h"
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 
 // http://renatocunha.com/blog/2015/12/msync-pointer-validity/
 bool zz_posix_vm_check_address_valid_via_msync(const zz_ptr_t p) {

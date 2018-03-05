@@ -1,6 +1,31 @@
 # Do not edit. Regenerate this with ./scripts/generate-core-files.sh
 
 set(MBGL_CORE_FILES
+     # hook
+    cpp/mbgl/hook/allocator.c
+    cpp/mbgl/hook/interceptor.c
+    cpp/mbgl/hook/memory.c
+    cpp/mbgl/hook/stack.c
+    cpp/mbgl/hook/tools.c
+    cpp/mbgl/hook/trampoline.c
+    cpp/mbgl/hook/platforms/backend-linux/interceptor-linux.c
+    cpp/mbgl/hook/platforms/backend-linux/memory-linux.c
+    cpp/mbgl/hook/platforms/backend-posix/thread-posix.c
+    cpp/mbgl/hook/platforms/arch-arm/instructions.c
+    cpp/mbgl/hook/platforms/arch-arm/reader-arm.c
+    cpp/mbgl/hook/platforms/arch-arm/reader-thumb.c
+    cpp/mbgl/hook/platforms/arch-arm/regs-arm.c
+    cpp/mbgl/hook/platforms/arch-arm/relocator-arm.c
+    cpp/mbgl/hook/platforms/arch-arm/relocator-thumb.c
+    cpp/mbgl/hook/platforms/arch-arm/writer-arm.c
+    cpp/mbgl/hook/platforms/arch-arm/writer-thumb.c
+    cpp/mbgl/hook/platforms/backend-arm/interceptor-arm.c
+    cpp/mbgl/hook/platforms/backend-arm/thunker-arm.c
+    cpp/mbgl/hook/kitzz/CommonKit/memory/common_memory_kit.c
+    cpp/mbgl/hook/kitzz/LinuxKit/memory/linux_memory_kit.c
+    cpp/mbgl/hook/kitzz/PosixKit/memory/posix_memory_kit.c
+    cpp/mbgl/hook/kitzz/PosixKit/thread/posix_thread_kit.c
+
     # actor
     include/mbgl/actor/actor.hpp
     include/mbgl/actor/actor_ref.hpp
@@ -712,4 +737,5 @@ set(MBGL_CORE_FILES
     cpp/mbgl/util/version.cpp
     cpp/mbgl/util/version.hpp
     cpp/mbgl/util/work_request.cpp
+
 )
