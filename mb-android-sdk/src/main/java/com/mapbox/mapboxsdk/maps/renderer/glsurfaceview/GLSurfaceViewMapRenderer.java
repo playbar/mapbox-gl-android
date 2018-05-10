@@ -27,7 +27,7 @@ public class GLSurfaceViewMapRenderer extends MapRenderer implements GLSurfaceVi
     glSurfaceView.setEGLContextClientVersion(2);
     glSurfaceView.setEGLConfigChooser(new EGLConfigChooser());
     glSurfaceView.setRenderer(this);
-    glSurfaceView.setRenderMode(RENDERMODE_WHEN_DIRTY);
+//    glSurfaceView.setRenderMode(RENDERMODE_WHEN_DIRTY);
   }
 
   @Override

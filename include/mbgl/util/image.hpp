@@ -8,8 +8,6 @@
 #include <cstring>
 #include <memory>
 #include <algorithm>
-#include "unistd.h"
-#include "mylog.h"
 
 namespace mbgl {
 
@@ -22,43 +20,32 @@ enum class ImageAlphaMode {
 template <ImageAlphaMode Mode>
 class Image : private util::noncopyable {
 public:
-    Image()
-    {
-        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
-    }
+    Image() = default;
 
     Image(Size size_)
         : size(std::move(size_)),
-          data(std::make_unique<uint8_t[]>(bytes()))
-    {
-        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
-    }
+          data(std::make_unique<uint8_t[]>(bytes())) {}
 
     Image(Size size_, const uint8_t* srcData, std::size_t srcLength)
         : size(std::move(size_)) {
         if (srcLength != bytes()) {
             throw std::invalid_argument("mismatched image size");
         }
-        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         data = std::make_unique<uint8_t[]>(bytes());
         std::copy(srcData, srcData + srcLength, data.get());
     }
 
     Image(Size size_, std::unique_ptr<uint8_t[]> data_)
         : size(std::move(size_)),
-          data(std::move(data_)) {
-        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
-    }
+          data(std::move(data_)) {}
 
     Image(Image&& o)
         : size(o.size),
           data(std::move(o.data)) {
-        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         o.size.width = o.size.height = 0;
     }
 
     Image& operator=(Image&& o) {
-        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         size = o.size;
         data = std::move(o.data);
         o.size.width = o.size.height = 0;
@@ -66,7 +53,6 @@ public:
     }
 
     friend bool operator==(const Image& lhs, const Image& rhs) {
-        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         return std::equal(lhs.data.get(), lhs.data.get() + lhs.bytes(),
                           rhs.data.get(), rhs.data.get() + rhs.bytes());
     }
@@ -135,7 +121,6 @@ public:
     // in `dst`. If the specified bounds exceed the bounds of the source or destination,
     // throw `std::out_of_range`. Must not be used to move data within a single Image.
     static void copy(const Image& srcImg, Image& dstImg, const Point<uint32_t>& srcPt, const Point<uint32_t>& dstPt, const Size& size) {
-        LOGE("Fun:%s, Line:%d, tid=%d", __FUNCTION__, __LINE__, gettid());
         if (size.isEmpty()) {
             return;
         }
@@ -173,13 +158,11 @@ public:
             std::copy(srcData + srcOffset,
                       srcData + srcOffset + size.width * channels,
                       dstData + dstOffset);
-//            *((uint8_t *)(dstData + dstOffset)) = 0;
         }
     }
 
     Size size;
     static constexpr size_t channels = Mode == ImageAlphaMode::Exclusive ? 1 : 4;
-//private:
     std::unique_ptr<uint8_t[]> data;
 };
 

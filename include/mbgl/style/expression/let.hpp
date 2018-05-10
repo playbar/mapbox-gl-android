@@ -39,6 +39,8 @@ public:
         return result.get();
     }
 
+    mbgl::Value serialize() const override;
+    std::string getOperator() const override { return "let"; }
 private:
     Bindings bindings;
     std::unique_ptr<Expression> result;
@@ -66,6 +68,11 @@ public:
 
     std::vector<optional<Value>> possibleOutputs() const override;
 
+    mbgl::Value serialize() const override;
+    std::string getOperator() const override { return "var"; }
+    
+    const std::shared_ptr<Expression>& getBoundExpression() const { return value; }
+    
 private:
     std::string name;
     std::shared_ptr<Expression> value;

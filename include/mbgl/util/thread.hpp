@@ -15,8 +15,6 @@
 #include <string>
 #include <thread>
 #include <utility>
-#include <unistd.h>
-#include <mylog.h>
 
 namespace mbgl {
 namespace util {
@@ -45,17 +43,15 @@ public:
     Thread(const std::string& name, Args&&... args) {
         std::promise<void> running;
         
-        LOGE("Fun:%s, Line:%d, name=%s, tid=%d", __FUNCTION__, __LINE__, name.c_str(), gettid());
+        printf("File:%s, Fun:%s, Line:%d, name=%s \n", strrchr(__FILE__, '/')+1, __FUNCTION__, __LINE__, name.c_str());
 
         thread = std::thread([&] {
-
             platform::setCurrentThreadName(name);
             platform::makeThreadLowPriority();
 
             util::RunLoop loop_(util::RunLoop::Type::New);
             loop = &loop_;
 
-            LOGE("Fun:%s, Line:%d, name=%s, tid=%d", __FUNCTION__, __LINE__, name.c_str(), gettid());
             object = std::make_unique<Actor<Object>>(*this, std::forward<Args>(args)...);
             running.set_value();
 
@@ -109,7 +105,7 @@ public:
 
         auto pausing = paused->get_future();
 
-        loop->invoke([this] {
+        loop->invoke(RunLoop::Priority::High, [this] {
             auto resuming = resumed->get_future();
             paused->set_value();
             resuming.get();
@@ -134,28 +130,9 @@ private:
     MBGL_STORE_THREAD(tid);
 
     void schedule(std::weak_ptr<Mailbox> mailbox) override {
-        {
-            std::lock_guard<std::mutex> lock(mutex);
-            queue.push(mailbox);
-        }
-
-        loop->invoke([this] {
-                         receive();
-                     });
+        loop->schedule(mailbox);
     }
 
-    void receive() {
-        std::unique_lock<std::mutex> lock(mutex);
-
-        auto mailbox = queue.front();
-        queue.pop();
-        lock.unlock();
-
-        Mailbox::maybeReceive(mailbox);
-    }
-
-    std::mutex mutex;
-    std::queue<std::weak_ptr<Mailbox>> queue;
     std::thread thread;
     std::unique_ptr<Actor<Object>> object;
 

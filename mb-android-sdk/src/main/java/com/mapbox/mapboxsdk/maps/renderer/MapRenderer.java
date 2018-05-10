@@ -2,7 +2,6 @@ package com.mapbox.mapboxsdk.maps.renderer;
 
 import android.content.Context;
 import android.support.annotation.CallSuper;
-import android.util.Log;
 
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.storage.FileSource;
@@ -31,7 +30,6 @@ public abstract class MapRenderer implements MapRendererScheduler {
     String programCacheDir = context.getCacheDir().getAbsolutePath();
     // Initialise native peer
     nativeInitialize(this, fileSource, pixelRatio, programCacheDir, localIdeographFontFamily);
-    Log.i("mapreander", "MapRender initialize is ok");
   }
 
   public void onStart() {

@@ -8,7 +8,7 @@ android {
         applicationId "com.mapbox.mapboxsdk.testapp"
         minSdkVersion androidVersions.minSdkVersion
         targetSdkVersion androidVersions.targetSdkVersion
-        versionCode 12
+        versionCode 13
         versionName "6.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -39,8 +39,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -49,20 +50,20 @@ android {
         javaMaxHeapSize "2g"
         preDexLibraries true
     }
-
 }
 
 dependencies {
-    implementation(project(':mb-android-sdk'))
-    implementation(dependenciesList.mapboxJavaServices) {
-        transitive = true
-    }
+    api(project(':mb-android-sdk'))
+    implementation dependenciesList.mapboxJavaServices
+
+    implementation dependenciesList.mapboxJavaTurf
 
     implementation dependenciesList.supportAppcompatV7
     implementation dependenciesList.supportRecyclerView
     implementation dependenciesList.supportDesign
 
-    implementation dependenciesList.lost
+    // implementation dependenciesList.lost
+    implementation dependenciesList.gmsLocation
     implementation dependenciesList.timber
     debugImplementation dependenciesList.leakCanaryDebug
     releaseImplementation dependenciesList.leakCanaryRelease
@@ -72,6 +73,7 @@ dependencies {
     androidTestImplementation dependenciesList.testRules
     androidTestImplementation dependenciesList.testEspressoCore
     androidTestImplementation dependenciesList.testEspressoIntents
+    androidTestImplementation dependenciesList.testEspressoContrib
 }
 
 apply from: "${rootDir}/gradle/gradle-make.gradle"

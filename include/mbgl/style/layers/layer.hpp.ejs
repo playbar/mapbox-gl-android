@@ -11,6 +11,9 @@
 #include <mbgl/style/filter.hpp>
 #include <mbgl/style/property_value.hpp>
 #include <mbgl/style/data_driven_property_value.hpp>
+<% if (type === 'heatmap') { -%>
+#include <mbgl/style/heatmap_color_property_value.hpp>
+<% } -%>
 
 #include <mbgl/util/color.hpp>
 
@@ -35,7 +38,7 @@ public:
 <% if (type !== 'background') { -%>
     // Source
     const std::string& getSourceID() const;
-<% if (type !== 'raster') { -%>
+<% if (type !== 'raster' && type !== 'hillshade') { -%>
     const std::string& getSourceLayer() const;
     void setSourceLayer(const std::string& sourceLayer);
 

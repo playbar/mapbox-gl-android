@@ -3,15 +3,11 @@ apply plugin: 'com.android.library'
 dependencies {
     api dependenciesList.mapboxAndroidTelemetry
     api dependenciesList.mapboxJavaGeoJSON
+    api dependenciesList.mapboxAndroidGestures
     implementation dependenciesList.supportAnnotations
     implementation dependenciesList.supportFragmentV4
     implementation dependenciesList.timber
     implementation dependenciesList.okhttp3
-    compileOnly(dependenciesList.lost) {
-        exclude group: 'com.google.guava'
-        exclude group: 'com.android.support'
-    }
-    testImplementation dependenciesList.lost
     testImplementation dependenciesList.junit
     testImplementation dependenciesList.mockito
     testImplementation dependenciesList.robolectric
@@ -25,6 +21,8 @@ android {
         minSdkVersion androidVersions.minSdkVersion
         targetSdkVersion androidVersions.targetSdkVersion
         buildConfigField "String", "GIT_REVISION_SHORT", String.format("\"%s\"", getGitRevision())
+        buildConfigField "String", "MAPBOX_SDK_IDENTIFIER", String.format("\"%s\"", "mapbox-maps-android")
+        buildConfigField "String", "MAPBOX_SDK_VERSION", String.format("\"%s\"", project.VERSION_NAME)
         buildConfigField "String", "MAPBOX_VERSION_STRING", String.format("\"Mapbox/%s\"", project.VERSION_NAME)
         buildConfigField "String", "MAPBOX_EVENTS_USER_AGENT", String.format("\"MapboxEventsAndroid/%s\"", project.VERSION_NAME)
     }
@@ -41,7 +39,6 @@ android {
     //
     // When building from Android Studio, gradle.properties sets `android.buildOnlyTargetAbi=true` so that
     // only the architecture for the device you're running on gets built.
-    // def abi = 'all'
     def abi = 'armeabi-v7a'
     if (!project.hasProperty('android.injected.invoked.from.ide') || project.hasProperty("mapbox.abis")) {
         // Errors when the user invokes Gradle from the command line and didn't set mapbox.abis
@@ -109,13 +106,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     lintOptions {
         disable 'MissingTranslation', 'TypographyQuotes', 'ObsoleteLintCustomCheck', 'MissingPermission'
-        baseline file("lint-baseline-local.xml")
         checkAllWarnings true
         warningsAsErrors false
     }
@@ -149,4 +145,4 @@ apply from: "${rootDir}/gradle/gradle-javadoc.gradle"
 apply from: "${rootDir}/gradle/gradle-publish.gradle"
 apply from: "${rootDir}/gradle/gradle-checkstyle.gradle"
 apply from: "${rootDir}/gradle/gradle-tests-staticblockremover.gradle"
-apply from: "${rootDir}/gradle/gradle-lint.gradle"
+apply from: "${rootDir}/gradle/gradle-dependencies-graph.gradle"

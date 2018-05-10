@@ -2,7 +2,6 @@ package com.mapbox.mapboxsdk.testapp.adapter;
 
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +51,6 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.ViewHold
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     holder.labelView.setText(features.get(position).getLabel());
-    String strText = features.get(position).getDescription();
-    Log.e("FeatureAdapter", strText);
     holder.descriptionView.setText(features.get(position).getDescription());
   }
 

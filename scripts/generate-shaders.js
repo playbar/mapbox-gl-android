@@ -3,8 +3,11 @@
 require('flow-remove-types/register');
 
 const path = require('path');
-const shaders = require('../mapbox-gl-js/src/shaders');
 const outputPath = 'src/mbgl/shaders';
+
+var shaders = require('../mapbox-gl-js/src/shaders');
+
+delete shaders.lineGradient;
 
 require('./style-code');
 

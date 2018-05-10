@@ -1,5 +1,6 @@
 package com.mapbox.mapboxsdk.maps.widgets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
  * use {@link com.mapbox.mapboxsdk.maps.UiSettings}.
  * </p>
  */
+@SuppressLint("AppCompatCustomView")
 public final class CompassView extends ImageView implements Runnable {
 
   public static final long TIME_WAIT_IDLE = 500;

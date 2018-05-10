@@ -7,7 +7,7 @@ target_sources(mbgl-offline
 )
 
 target_include_directories(mbgl-offline
-    PRIVATE default
+    PRIVATE platform/default
 )
 
 target_link_libraries(mbgl-offline

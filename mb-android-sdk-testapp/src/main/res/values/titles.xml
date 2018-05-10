@@ -4,7 +4,7 @@
     <string name="activity_map_fragment">Map Fragment</string>
     <string name="activity_multimap">Multiple Maps on Screen</string>
     <string name="activity_add_bulk_markers">Add Markers In Bulk</string>
-    <string name="activity_animated_marker">Animated Markers</string>
+    <string name="activity_animated_symbollayer">Animated SymbolLayer</string>
     <string name="activity_dynamic_marker">Dynamic Marker</string>
     <string name="activity_polyline">Polyline</string>
     <string name="activity_polygon">Polygon</string>
@@ -21,11 +21,6 @@
     <string name="activity_scroll_by">Scroll By Method</string>
     <string name="activity_double_map">Double Map Activity</string>
     <string name="activity_snapshot">Snapshot Activity</string>
-    <string name="activity_user_tracking_mode">User tracking mode</string>
-    <string name="activity_user_tracking_customization">User location drawable</string>
-    <string name="activity_user_dot_color">User location tint color</string>
-    <string name="activity_user_location_toggle">User location toggle</string>
-    <string name="activity_custom_location_engine">Custom location engine</string>
     <string name="activity_custom_layer">Custom Layer</string>
     <string name="activity_map_padding">Map Padding</string>
     <string name="activity_debug_mode">Debug Mode</string>
@@ -67,6 +62,10 @@
     <string name="activity_textureview_debug">TextureView debug</string>
     <string name="activity_textureview_resize">TextureView resize</string>
     <string name="activity_textureview_animate">TextureView animation</string>
+    <string name="activity_textureview_transparent">TextureView transparent background</string>
     <string name="activity_grid_source">Grid Source</string>
     <string name="activity_local_glyph">Local CJK glyph generation</string>
+    <string name="activity_hillshade">Hillshade</string>
+    <string name="activity_heatmaplayer">Heatmap layer</string>
+    <string name="activity_gesture_detector">Gestures detector</string>
 </resources>

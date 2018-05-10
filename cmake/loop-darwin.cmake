@@ -6,7 +6,7 @@ add_library(mbgl-loop-darwin STATIC
 
 target_include_directories(mbgl-loop-darwin
     PRIVATE include
-    PRIVATE cpp
+    PRIVATE src
 )
 
 create_source_groups(mbgl-loop-darwin)

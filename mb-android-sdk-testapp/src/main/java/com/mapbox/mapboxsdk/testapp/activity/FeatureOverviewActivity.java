@@ -8,15 +8,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.mapbox.mapboxsdk.testapp.PermissionUtils;
@@ -25,8 +21,6 @@ import com.mapbox.mapboxsdk.testapp.adapter.FeatureAdapter;
 import com.mapbox.mapboxsdk.testapp.adapter.FeatureSectionAdapter;
 import com.mapbox.mapboxsdk.testapp.model.activity.Feature;
 import com.mapbox.mapboxsdk.testapp.utils.ItemClickSupport;
-import com.mapbox.services.android.telemetry.permissions.PermissionsListener;
-import com.mapbox.services.android.telemetry.permissions.PermissionsManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,22 +36,18 @@ import timber.log.Timber;
  * It uses tags as category and description to order the different entries.
  * </p>
  */
-public class FeatureOverviewActivity extends AppCompatActivity implements PermissionsListener {
+public class FeatureOverviewActivity extends AppCompatActivity {
 
   private static final String KEY_STATE_FEATURES = "featureList";
 
-  private PermissionsManager permissionsManager;
   private RecyclerView recyclerView;
   private FeatureSectionAdapter sectionAdapter;
   private List<Feature> features;
-  private int locationActivityInList;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_feature_overview);
-
-    permissionsManager = new PermissionsManager(this);
 
     recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,11 +58,6 @@ public class FeatureOverviewActivity extends AppCompatActivity implements Permis
       if (!sectionAdapter.isSectionHeaderPosition(position)) {
         int itemPosition = sectionAdapter.getConvertedPosition(position);
         Feature feature = features.get(itemPosition);
-        if (feature.isRequiresLocationPermission()) {
-          if (requestLocationPermission(itemPosition)) {
-            return;
-          }
-        }
         startFeature(feature);
       }
     });
@@ -130,45 +115,6 @@ public class FeatureOverviewActivity extends AppCompatActivity implements Permis
     startActivity(intent);
   }
 
-  private boolean requestLocationPermission(final int positionInList) {
-    if (isRuntimePermissionsRequired()) {
-      locationActivityInList = positionInList;
-      permissionsManager.requestLocationPermissions(this);
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  public void onExplanationNeeded(List<String> list) {
-    Snackbar.make(
-      findViewById(android.R.id.content),
-      TextUtils.join("", list.toArray()),
-      Snackbar.LENGTH_SHORT).show();
-  }
-
-  @Override
-  public void onPermissionResult(boolean isPermissionGranted) {
-    if (isPermissionGranted) {
-      startFeature(features.get(locationActivityInList));
-    } else {
-      Snackbar.make(
-        findViewById(android.R.id.content),
-        "Can't open without accepting the location permission.",
-        Snackbar.LENGTH_SHORT).show();
-    }
-  }
-
-  @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-  }
-
-  private boolean isRuntimePermissionsRequired() {
-    return android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-  }
-
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
@@ -190,8 +136,7 @@ public class FeatureOverviewActivity extends AppCompatActivity implements Permis
           String label = getString(info.labelRes);
           String description = resolveString(info.descriptionRes);
           String category = resolveMetaData(info.metaData, metaDataKey);
-          boolean requiresLocationPermission = requiresLocationPermission(label, category);
-          features.add(new Feature(info.name, label, description, category, requiresLocationPermission));
+          features.add(new Feature(info.name, label, description, category));
         }
       }
 
@@ -223,24 +168,6 @@ public class FeatureOverviewActivity extends AppCompatActivity implements Permis
       } catch (Resources.NotFoundException exception) {
         return "-";
       }
-    }
-
-    private boolean requiresLocationPermission(String name, String category) {
-      final Resources resources = getResources();
-
-      List<String> requiresPermissionCategories = new ArrayList<String>() {
-        {
-          add(resources.getString(R.string.category_userlocation));
-        }
-      };
-
-      List<String> requiresPermissionActivities = new ArrayList<String>() {
-        {
-          add(resources.getString(R.string.activity_double_map));
-        }
-      };
-
-      return requiresPermissionCategories.contains(category) || requiresPermissionActivities.contains(name);
     }
 
     @Override

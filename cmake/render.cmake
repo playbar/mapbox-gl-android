@@ -3,7 +3,7 @@ add_executable(mbgl-render
 )
 
 target_include_directories(mbgl-render
-    PRIVATE default
+    PRIVATE platform/default
 )
 
 target_link_libraries(mbgl-render

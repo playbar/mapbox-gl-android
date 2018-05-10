@@ -5,10 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
-import com.mapbox.mapboxsdk.style.layers.Filter;
-import com.mapbox.services.commons.geojson.Feature;
-import com.mapbox.services.commons.geojson.FeatureCollection;
+import com.mapbox.mapboxsdk.style.expressions.Expression;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -37,18 +37,18 @@ public class CustomGeometrySource extends Source {
    * @param provider The tile provider that returns geometry data for this source.
    */
   public CustomGeometrySource(String id, GeometryTileProvider provider) {
-    this(id, provider, new GeoJsonOptions());
+    this(id, provider, new CustomGeometrySourceOptions());
   }
 
   /**
-   * Create a CustomGeometrySource with non-default GeoJsonOptions.
+   * Create a CustomGeometrySource with non-default CustomGeometrySourceOptions.
    * <p>Supported options are minZoom, maxZoom, buffer, and tolerance.</p>
    *
    * @param id      The source id.
    * @param provider The tile provider that returns geometry data for this source.
-   * @param options GeoJsonOptions.
+   * @param options CustomGeometrySourceOptions.
    */
-  public CustomGeometrySource(String id, GeometryTileProvider provider, GeoJsonOptions options) {
+  public CustomGeometrySource(String id, GeometryTileProvider provider, CustomGeometrySourceOptions options) {
     this.provider = provider;
     executor = Executors.newFixedThreadPool(4);
     initialize(id, options);
@@ -94,11 +94,11 @@ public class CustomGeometrySource extends Source {
   /**
    * Queries the source for features.
    *
-   * @param filter an optional filter statement to filter the returned Features
+   * @param filter an optional filter expression to filter the returned Features
    * @return the features
    */
   @NonNull
-  public List<Feature> querySourceFeatures(@Nullable Filter.Statement filter) {
+  public List<Feature> querySourceFeatures(@Nullable Expression filter) {
     Feature[] features = querySourceFeatures(filter != null ? filter.toArray() : null);
     return features != null ? Arrays.asList(features) : new ArrayList<Feature>();
   }

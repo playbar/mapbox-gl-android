@@ -32,7 +32,7 @@ public:
 
     template <class I>
     auto& get() {
-        return std::get<TypeIndex<I, Is...>::value>(*this);
+        return get_polyfill<TypeIndex<I, Is...>::value>(*this);
     }
 
     template <class I>
