@@ -22,6 +22,7 @@
 #include <list>
 #include <unordered_set>
 #include <unordered_map>
+#include <mylog.h>
 
 namespace mbgl {
 
@@ -206,6 +207,8 @@ OnlineFileSource::OnlineFileSource()
 OnlineFileSource::~OnlineFileSource() = default;
 
 std::unique_ptr<AsyncRequest> OnlineFileSource::request(const Resource& resource, Callback callback) {
+    LOGETAG("online_file_source.cpp", "Fun:%s, Line:%d, url=%s, tid=%d", __FUNCTION__, __LINE__,
+            resource.url.c_str(), gettid() );
     Resource res = resource;
 
     switch (resource.kind) {

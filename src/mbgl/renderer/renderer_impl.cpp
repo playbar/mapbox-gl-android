@@ -29,6 +29,7 @@
 #include <mbgl/util/math.hpp>
 #include <mbgl/util/string.hpp>
 #include <mbgl/util/logging.hpp>
+#include "mylog.h"
 
 namespace mbgl {
 
@@ -174,21 +175,24 @@ void Renderer::Impl::render(const UpdateParameters& updateParameters) {
     }
 
     // Update layers for class and zoom changes.
-    for (const auto& entry : renderLayers) {
-        RenderLayer& layer = *entry.second;
-        const bool layerAdded = layerDiff.added.count(entry.first);
-        const bool layerChanged = layerDiff.changed.count(entry.first);
+//    if( zoomChanged)
+    {
+        for (const auto &entry : renderLayers) {
+            RenderLayer &layer = *entry.second;
+            const bool layerAdded = layerDiff.added.count(entry.first);
+            const bool layerChanged = layerDiff.changed.count(entry.first);
 
-        if (layerAdded || layerChanged) {
-            layer.transition(transitionParameters);
+            if (layerAdded || layerChanged) {
+                layer.transition(transitionParameters);
 
-            if (layer.is<RenderHeatmapLayer>()) {
-                layer.as<RenderHeatmapLayer>()->updateColorRamp();
+                if (layer.is<RenderHeatmapLayer>()) {
+                    layer.as<RenderHeatmapLayer>()->updateColorRamp();
+                }
             }
-        }
 
-        if (layerAdded || layerChanged || zoomChanged || layer.hasTransition()) {
-            layer.evaluate(evaluationParameters);
+            if (layerAdded || layerChanged || zoomChanged || layer.hasTransition()) {
+                layer.evaluate(evaluationParameters);
+            }
         }
     }
 
@@ -646,6 +650,7 @@ void Renderer::Impl::render(const UpdateParameters& updateParameters) {
 
     // Cleanup only after signaling completion
     parameters.context.performCleanup();
+    ShowFPS();
 }
 
 std::vector<Feature> Renderer::Impl::queryRenderedFeatures(const ScreenLineString& geometry, const RenderedQueryOptions& options) const {

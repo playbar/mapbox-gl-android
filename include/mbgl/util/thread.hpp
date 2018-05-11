@@ -6,6 +6,7 @@
 #include <mbgl/util/platform.hpp>
 #include <mbgl/util/run_loop.hpp>
 #include <mbgl/util/util.hpp>
+#include "mylog.h"
 
 #include <cassert>
 #include <future>
@@ -43,7 +44,7 @@ public:
     Thread(const std::string& name, Args&&... args) {
         std::promise<void> running;
         
-        printf("File:%s, Fun:%s, Line:%d, name=%s \n", strrchr(__FILE__, '/')+1, __FUNCTION__, __LINE__, name.c_str());
+        LOGE("Fun:%s, Line:%d, name=%s \n", __FUNCTION__, __LINE__, name.c_str());
 
         thread = std::thread([&] {
             platform::setCurrentThreadName(name);

@@ -17,7 +17,7 @@
 #define MY_LOG_LEVEL_FATAL      6
 #define MY_LOG_LEVEL_SILENT     7
 
-//#define SHOW_LOG 1
+#define SHOW_LOG 1
 
 #ifndef MY_LOG_TAG
 #define MY_LOG_TAG "test"
@@ -137,7 +137,7 @@ inline void ShowFPS()
     {
         float elapsedSec = (float)(currentTimeMs - prevTimeMs) / 1000.0f;
         float currentFPS = (float)frameCounter / elapsedSec;
-        LOGE("FPS: %0.2f, maxFPS: %0.2f, minFPS: %0.2f",  currentFPS, maxFPS, minFPS);
+        LOGE("FPS: %0.2f, maxFPS: %0.2f, minFPS: %0.2f, tid=%d",  currentFPS, maxFPS, minFPS, gettid());
 
         minFPS = currentFPS;
         maxFPS = currentFPS;

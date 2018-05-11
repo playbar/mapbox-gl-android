@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,6 +63,7 @@ public class DebugModeActivity extends AppCompatActivity implements OnMapReadyCa
     setupMapView(savedInstanceState);
     setupDebugChangeView();
     setupStyleChangeView();
+    Log.e("DebugModeActivity", "tid = " + android.os.Process.myTid());
   }
 
   private void setupToolbar() {
