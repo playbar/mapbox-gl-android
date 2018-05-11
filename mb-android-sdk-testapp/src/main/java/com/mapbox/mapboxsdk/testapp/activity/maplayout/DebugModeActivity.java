@@ -42,14 +42,15 @@ public class DebugModeActivity extends AppCompatActivity implements OnMapReadyCa
   private int currentStyleIndex = 0;
 
   private static final String[] STYLES = new String[] {
-    Style.MAPBOX_STREETS,
-    Style.OUTDOORS,
-    Style.LIGHT,
-    Style.DARK,
-    Style.SATELLITE,
-    Style.SATELLITE_STREETS,
-    Style.TRAFFIC_DAY,
-    Style.TRAFFIC_NIGHT
+          Style.MAPBOX_STYLE_ASSET,
+          Style.MAPBOX_STREETS,
+          Style.OUTDOORS,
+          Style.LIGHT,
+          Style.DARK,
+          Style.SATELLITE,
+          Style.SATELLITE_STREETS,
+          Style.TRAFFIC_DAY,
+          Style.TRAFFIC_NIGHT
   };
 
   @Override

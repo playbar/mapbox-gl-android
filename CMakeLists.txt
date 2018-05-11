@@ -131,7 +131,7 @@ else()
     message(STATUS "Can't find ccache — consider installing ccache to improve recompilation performance")
 endif()
 
-if(NOT EXISTS ${CMAKE_SOURCE_DIR}/platform/${MBGL_PLATFORM}/config.cmake)
+if(NOT EXISTS ${CMAKE_SOURCE_DIR}/config.cmake)
     message(ERROR "Can't find config.cmake file for platform ${MBGL_PLATFORM}")
 endif()
 
@@ -144,10 +144,10 @@ endif()
 include(cmake/core-files.cmake)
 include(cmake/core.cmake)
 
-if(COMMAND mbgl_platform_test)
-    include(cmake/test-files.cmake)
-    include(cmake/test.cmake)
-endif()
+#if(COMMAND mbgl_platform_test)
+#    include(cmake/test-files.cmake)
+#    include(cmake/test.cmake)
+#endif()
 
 if(COMMAND mbgl_platform_benchmark)
     include(cmake/benchmark-files.cmake)

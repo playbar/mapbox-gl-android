@@ -34,6 +34,8 @@ public class Style {
    * constant means your map style will always use the latest version and may change as we
    * improve the style.
    */
+  public static final String MAPBOX_STYLE_ASSET = "asset://style_test.json";
+
   public static final String MAPBOX_STREETS = "mapbox://styles/mapbox/streets-v10";
 
   /**
